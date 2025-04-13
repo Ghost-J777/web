@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Historias de Videojuegos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="logo.ico">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+    
+    :root {
+      --primary-color: #6200ea;
+      --secondary-color: #00b0ff;
+      --accent-color: #ff3d00;
+      --dark-bg: #121212;
+      --card-bg: #1e1e1e;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
+      background-image: linear-gradient(to bottom, rgba(18, 18, 18, 0.95), rgba(18, 18, 18, 0.95));
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 2em 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 10px,
+        rgba(0, 0, 0, 0.2) 10px,
+        rgba(0, 0, 0, 0.2) 20px
+      );
+    }
+    
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+    
+    nav {
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    nav a {
+      color: var(--text-primary);
+      padding: 1.2em 1.5em;
+      text-decoration: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover {
+      color: var(--secondary-color);
+    }
+    
+    nav a:hover::after {
+      width: 80%;
+    }
+    
+    main {
+      padding: 3em 1em;
+      max-width: 1200px;
+      margin: auto;
+    }
+    
+    section {
+      padding: 2.5em;
+      margin-bottom: 3em;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-left: 4px solid var(--primary-color);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 5px;
+      background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+    }
+    
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+    
+    section h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--secondary-color);
+      margin-bottom: 1.5em;
+      font-size: 2rem;
+      padding-bottom: 0.5em;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    section h2::before {
+      content: '⟩';
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+    
+    .media {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2em;
+      margin-bottom: 2em;
+    }
+    
+    .media-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    .media img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    
+    .media-container:hover img {
+      transform: scale(1.05);
+    }
+    
+    .media iframe {
+      width: 100%;
+      height: 250px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 2em;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .opinion {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1.5em;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .opinion h3 {
+      color: var(--text-primary);
+      margin-bottom: 1em;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .opinion h3::before {
+      content: '\f4ad';
+      font-family: 'Font Awesome 6 Free';
+      color: var(--accent-color);
+    }
+    
+    .opinion textarea {
+      width: 100%;
+      height: 120px;
+      padding: 1em;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+      font-family: 'Roboto', sans-serif;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+    
+    .opinion textarea:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      background-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 10px rgba(98, 0, 234, 0.5);
+    }
+    
+    .opinion textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .opinion .button-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1em;
+    }
+    
+    .opinion button {
+      padding: 0.8em 2em;
+      border: none;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .opinion button::before {
+      content: '\f1d8';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+    }
+    
+    .opinion button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    }
+    
+    .opinion button:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .game-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin-bottom: 2em;
+      font-size: 0.9rem;
+    }
+    
+    .game-tag {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 0.5em 1em;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .game-tag i {
+      color: var(--accent-color);
+    }
+    
+    footer {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      text-align: center;
+      padding: 2em 0;
+      margin-top: 3em;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 10px,
+        rgba(0, 0, 0, 0.2) 10px,
+        rgba(0, 0, 0, 0.2) 20px
+      );
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5em;
+      margin-bottom: 1.5em;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      transform: translateY(-5px);
+      color: var(--accent-color);
+    }
+    
+    footer p {
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--dark-bg);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--primary-color), var(--secondary-color));
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-color);
+    }
+    
+    /* Game-specific styling */
+    #codmw2 {
+      border-left-color: #44c767;
+    }
+    
+    #tlou {
+      border-left-color: #f44336;
+    }
+    
+    #rdr2 {
+      border-left-color: #ff9800;
+    }
+    
+    #acvalhalla {
+      border-left-color: #2196f3;
+    }
+    
+    #acmirage {
+      border-left-color: #9c27b0;
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 99;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Responsive */
+    @media (min-width: 768px) {
+      .media {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      nav a {
+        padding: 1.2em 2em;
+      }
+      
+      .media iframe {
+        height: 320px;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      section {
+        padding: 1.5em;
+      }
+      
+      section h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fas fa-gamepad"></i> HISTORIAS DE VIDEOJUEGOS</h1>
+</header>
+
+<nav id="main-nav">
+  <a href="#codmw2"><i class="fas fa-crosshairs"></i> Modern Warfare 2</a>
+  <a href="#tlou"><i class="fas fa-biohazard"></i> The Last of Us</a>
+  <a href="#rdr2"><i class="fas fa-hat-cowboy"></i> Red Dead Redemption 2</a>
+  <a href="#acvalhalla"><i class="fas fa-hammer"></i> AC Valhalla</a>
+  <a href="#acmirage"><i class="fas fa-khanda"></i> AC Mirage</a>
+</nav>
+
+<main>
+  <section id="codmw2">
+    <h2>Call of Duty: Modern Warfare 2</h2>
+    <div class="game-info">
+      <div class="game-tag"><i class="fas fa-calendar"></i> 2022</div>
+      <div class="game-tag"><i class="fas fa-gamepad"></i> FPS</div>
+      <div class="game-tag"><i class="fas fa-star"></i> 9.5/10</div>
+      <div class="game-tag"><i class="fas fa-users"></i> Infinity Ward</div>
+    </div>
+    <div class="media">
+      <div class="media-container">
+        <img src="https://w0.peakpx.com/wallpaper/769/579/HD-wallpaper-call-of-duty-modern-warfare-2.jpg">
+      </div>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/Y7BQbIZqkLk?si=bIv1qhekl-NS2xIo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p>Call of Duty: Modern Warfare 2 continúa la historia de la Fuerza Operativa 141, enfrentándose a amenazas globales y traiciones internas. El juego destaca por su intensa narrativa y acción cinematográfica que revolucionó el género de los shooters. Sus misiones icónicas como "No Russian" generaron debate sobre los límites narrativos en los videojuegos.</p>
+    <div class="opinion">
+      <h3>¿Qué opinas de este juego?</h3>
+      <textarea placeholder="Comparte tu experiencia con Modern Warfare 2..."></textarea>
+      <div class="button-container">
+        <button>Enviar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="tlou">
+    <h2>The Last of Us</h2>
+    <div class="game-info">
+      <div class="game-tag"><i class="fas fa-calendar"></i> 2013</div>
+      <div class="game-tag"><i class="fas fa-gamepad"></i> Acción/Aventura</div>
+      <div class="game-tag"><i class="fas fa-star"></i> 9.7/10</div>
+      <div class="game-tag"><i class="fas fa-users"></i> Naughty Dog</div>
+    </div>
+    <div class="media">
+      <div class="media-container">
+        <img src="https://i.pinimg.com/736x/d9/aa/08/d9aa08a18a0df3353edc8a55f3474a3f.jpg">
+      </div>
+      <iframe src="https://www.youtube.com/embed/W01L70IGBgE" allowfullscreen></iframe>
+    </div>
+    <p>The Last of Us narra la emotiva travesía de Joel y Ellie en un mundo postapocalíptico. Su historia explora temas de amor, pérdida y supervivencia de una manera que elevó la narrativa en videojuegos a un nuevo nivel. La relación entre los protagonistas y su evolución durante el viaje a través de una América desolada representa uno de los mayores logros narrativos en la historia de los videojuegos.</p>
+    <div class="opinion">
+      <h3>¿Qué opinas de este juego?</h3>
+      <textarea placeholder="Comparte tu experiencia con The Last of Us..."></textarea>
+      <div class="button-container">
+        <button>Enviar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="rdr2">
+    <h2>Red Dead Redemption 2</h2>
+    <div class="game-info">
+      <div class="game-tag"><i class="fas fa-calendar"></i> 2018</div>
+      <div class="game-tag"><i class="fas fa-gamepad"></i> Mundo Abierto</div>
+      <div class="game-tag"><i class="fas fa-star"></i> 9.8/10</div>
+      <div class="game-tag"><i class="fas fa-users"></i> Rockstar Games</div>
+    </div>
+    <div class="media">
+      <div class="media-container">
+        <img src="https://wallpapercg.com/download/red-dead-redemption-2-4k--11991.jpg">
+      </div>
+      <iframe src="https://www.youtube.com/embed/eaW0tYpxyp0" allowfullscreen></iframe>
+    </div>
+    <p>Ambientado en 1899, Red Dead Redemption 2 sigue a Arthur Morgan y la banda de Dutch van der Linde en su lucha por sobrevivir mientras la era del Salvaje Oeste llega a su fin. El juego es reconocido por su narrativa profunda, mundo abierto meticulosamente detallado y personajes complejos que reflejan el cambio de una época. La historia de redención de Arthur Morgan y su viaje personal constituye una de las experiencias más inmersivas jamás creadas en un videojuego.</p>
+    <div class="opinion">
+      <h3>¿Qué opinas de este juego?</h3>
+      <textarea placeholder="Comparte tu experiencia con Red Dead Redemption 2..."></textarea>
+      <div class="button-container">
+        <button>Enviar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="acvalhalla">
+    <h2>Assassin's Creed Valhalla</h2>
+    <div class="game-info">
+      <div class="game-tag"><i class="fas fa-calendar"></i> 2020</div>
+      <div class="game-tag"><i class="fas fa-gamepad"></i> Acción/RPG</div>
+      <div class="game-tag"><i class="fas fa-star"></i> 8.5/10</div>
+      <div class="game-tag"><i class="fas fa-users"></i> Ubisoft</div>
+    </div>
+    <div class="media">
+      <div class="media-container">
+        <img src="https://w0.peakpx.com/wallpaper/833/372/HD-wallpaper-valhalla-assassin-s-creed.jpg">
+      </div>
+      <iframe src="https://www.youtube.com/embed/ssrNcwxALS4" allowfullscreen></iframe>
+    </div>
+    <p>Assassin's Creed Valhalla sigue a Eivor, un vikingo en busca de gloria durante la conquista de Inglaterra. El juego mezcla historia, mitología nórdica y exploración en un vasto mundo abierto que permite experimentar la vida vikinga en toda su complejidad. Las alianzas políticas, las batallas épicas y la construcción de asentamientos ofrecen una visión única de este fascinante período histórico, mientras se mantiene fiel a los elementos de la saga Assassin's Creed.</p>
+    <div class="opinion">
+      <h3>¿Qué opinas de este juego?</h3>
+      <textarea placeholder="Comparte tu experiencia con Assassin's Creed Valhalla..."></textarea>
+      <div class="button-container">
+        <button>Enviar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="acmirage">
+    <h2>Assassin's Creed Mirage</h2>
+    <div class="game-info">
+      <div class="game-tag"><i class="fas fa-calendar"></i> 2023</div>
+      <div class="game-tag"><i class="fas fa-gamepad"></i> Acción/Sigilo</div>
+      <div class="game-tag"><i class="fas fa-star"></i> 8.3/10</div>
+      <div class="game-tag"><i class="fas fa-users"></i> Ubisoft</div>
+    </div>
+    <div class="media">
+      <div class="media-container">
+        <img src="https://s0.smartresize.com/wallpaper/624/567/HD-wallpaper-assassins-creed-mirage-2023-game-logo.jpg">  
+      </div>
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/tSnW0yA8NB0?si=sinR5TvPdV05aZHz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p>Assassin's Creed Mirage regresa a las raíces de la saga, con un enfoque en el sigilo y la narrativa, ambientado en la Bagdad del siglo IX. El juego destaca por su homenaje a los títulos clásicos de la franquicia, recuperando mecánicas de parkour y asesinatos sigilosos que hicieron famosa a la serie. La historia de Basim, desde sus humildes orígenes hasta convertirse en un Maestro Asesino, revitaliza la esencia de la Hermandad y su conflicto con la Orden de los Antiguos.</p>
+    <div class="opinion">
+      <h3>¿Qué opinas de este juego?</h3>
+      <textarea placeholder="Comparte tu experiencia con Assassin's Creed Mirage..."></textarea>
+      <div class="button-container">
+        <button>Enviar</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <center><p>REDES SOCIALES</p></center><br>
+  <div class="social-links">
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+    <a href="#"><i class="fab fa-discord"></i></a>
+    <a href="#"><i class="fab fa-twitch"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+  </div>
+  <p>&copy; 2025 Universidad de San Carlos de Guatemala, Facultad de ingenieria esta presentesente.</p><br>
+  <p>pagina creada por: Jose sacarias y Ghostbyte_J(anomino)</p><br>
+  <p>Todos los derechos reservados</p>
+</footer>
+
+<div class="back-to-top">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<script>
+  // Back to top button functionality
+  const backToTop = document.querySelector('.back-to-top');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Add active class to current section in navigation
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
+  
+  window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      
+      if (pageYOffset >= (sectionTop - 150)) {
+        current = section.getAttribute('id');
+      }
+    });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').substring(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>
